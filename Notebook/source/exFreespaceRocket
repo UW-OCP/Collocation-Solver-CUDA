@@ -1,0 +1,21 @@
+# B. Houska, H. Ferreau, M Diehl,
+# ACADO toolkit - An open-source framework for automatic control and dynamic optimization,
+# Optimal Control Applications and Methods, Vol. 32, pp. 298--312, 2011.
+
+StateVariables          = [y1, y2, y3];
+ControlVariables        = [u];
+ParameterVariables      = [p];
+InitialTime             = 0.0;
+FinalTime               = 1.0;
+InitialConstraints      = [y1, y2, y3-1.0];           
+TerminalConstraints     = [y1 - 10, y2];       
+CostFunctional          = p*(1 + 0.1*u*u);
+DifferentialEquations   = [p*y2, p*(u-0.2*y2*y2)/y3, -0.01*p*u*u];
+InequalityConstraints   = [u-1.1, -1.1-u]; #, -(p-15)*(5-p)]; # p-15, 5-p
+StateVariableInequalityConstraints = [y2-1.7, -0.1-y2];
+
+InputFile              = "ex87.data";
+OutputFile              = "ex87a.data";
+Nodes                   = 101;
+Tolerance               = 1.0e-6;
+Display                 = NO;

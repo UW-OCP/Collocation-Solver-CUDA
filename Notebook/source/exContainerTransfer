@@ -1,0 +1,29 @@
+# Teo, K. L., Goh, C. J. and Wong, K. H.,
+# A unified computational approach to optimal control problems, 
+# Longman Scientific, 1991.
+
+Constants               = [rho = 1.0];
+StateVariables          = [x1, x2, x3, x4, x5, x6];
+ControlVariables        = [u1, u2];
+ParameterVariables      = [p];
+InitialConstraints      = [x1, x2 - 22.0, x3, x4, x5+1.0, x6];           
+TerminalConstraints     = [x1 - 10.0, x2 - 14.0, x3, x4 - 2.5, x5, x6]; 
+
+DifferentialEquations   = [p*x4, p*x5, p*x6, p*(u1+17.2656*x3), 
+                            p*u2, -p*(u1+27.0756*x3 + 2.0*x5*x6)/x2];
+InequalityConstraints   = [u1 - 2.83374, -2.83374 - u1, 
+                            u2 - 0.71265, -0.80865 - u2];
+
+Tolerance               = 1.0e-6;
+
+MaximumNodes            = 2000;
+MaximumNewtonIterations = 500;
+Display                 = NO;
+MaximumMeshRefinements  = 25;
+
+CostFunctional          = p*(rho + 0.01*(u1*u1 + u2*u2));
+
+ParameterEstimate       = [9.0];
+InputFile               = "ex25.data";
+OutputFile              = "ex26.data";
+

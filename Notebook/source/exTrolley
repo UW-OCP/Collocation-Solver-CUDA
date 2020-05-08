@@ -1,0 +1,42 @@
+# SMOOTHING TECHNIQUE OF NONSMOOTH NEWTON METHODS FOR CONTROL-STATE CONSTRAINED OPTIMAL
+# CONTROL PROBLEMS∗ JINHAI chen AND MATTHIAS gerdts
+# SIAM J. NUMER. ANAL. 2012 Society for Industrial and Applied Mathematics Vol. 50, No. 4, pp. 1982–2011
+#
+Constants               = [pi = 3.14159265358979,
+                            m1 = 0.3,
+                           m2 = 0.5,
+                           L = 0.75,
+                           Iy = 0.002,
+                           g = 9.81];
+Variables               = [f3_num, f3_den,
+                            f4_num];
+StateVariables          = [x1, x2, x3, x4];
+ControlVariables        = [u];
+InitialConstraints      = [x1, x2, x3, x4];
+TerminalConstraints     = [x1 - 1, x2, x3, x4];
+CostFunctional          = 0.5*(u*u + 5*x4*x4);
+
+f3_num = m2*m2*L*L*L*sin(x2)*x4*x4 - m2*L*L*u + m2*Iy*L*x4*x4*sin(x2) - Iy*u + m2*m2*L*L*g*cos(x2)*sin(x2);
+f3_den = -m1*m2*L*L - m1*Iy - m2*m2*L*L - m2*Iy + m2*m2*L*L*cos(x2)*cos(x2);
+f4_num = m2*L*(m2*L*cos(x2)*x4*x4*sin(x2) - cos(x2)*u + g*sin(x2)*(m1+m2));
+
+DifferentialEquations   = [x3, x4,
+                            f3_num/f3_den,
+                            f4_num/f3_den];
+InequalityConstraints  = [u - 0.5, -0.5 - u];
+Tolerance               = 1.0e-6;
+FinalTime               = 2.7;
+
+#TerminalPenalty         = (x1-1)*(x1-1) + x2*x2 + x3*x3 + x4*x4;
+#CostFunctional          = 0.5*(u*u + x1*x1 + x2*x2 + x3*x3 + x4*x4);
+#StateEstimate           = [t/2.7, 0.1*sin(pi*t/2.7), 0.8*cos(pi*t/2.7), 0.3*sin(pi*t/2.7)];
+#ControlEstimate         = [0.5 - t/2.7];
+#OutputFile              = "ex206a.data";
+
+InputFile               = "ex206a.data";
+OutputFile              = "ex206.data";
+Nodes                   = 271;
+Display                 = YES;
+MaximumNodes            = 1000;
+MaximumMeshRefinements  = 20;
+
