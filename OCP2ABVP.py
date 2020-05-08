@@ -3,6 +3,7 @@
 import sys
 from sympy import *
 from sympy import ccode
+import argparse
 
 _raw_line_number_ = 0
 
@@ -783,10 +784,10 @@ def make_variable_dict(fname):
 
 
 if __name__ == '__main__':
-    try:
-        ocp = sys.argv[1]
-    except:
-        print('Unable to read input file')
-        print('Exception: ', sys.exc_type, sys.exc_value)
+    parser = argparse.ArgumentParser(description="Use the CUDA based collocation solver to solve the "
+                                                 "optimal control problem.")
+    parser.add_argument("ocp", help="definition of the optimal control problem")
+    args = parser.parse_args()
+    ocp = args.ocp
 
     _ocp_translate(ocp, 0)

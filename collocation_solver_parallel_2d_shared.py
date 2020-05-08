@@ -1,5 +1,6 @@
 import sys
 import time
+import argparse
 from math import *
 
 import matplotlib.pyplot as plt
@@ -32,7 +33,8 @@ scale_by_initial = False
 residual2 = False
 
 
-def collocation_solver_parallel():
+def collocation_solver_parallel(m=4):
+    print("m = {}".format(m))
     # construct the bvp-dae problem
     # obtain the initial input
     bvp_dae = bvp_problem.BvpDae()
@@ -67,7 +69,6 @@ def collocation_solver_parallel():
         alpha_m = 0.1
     beta = 0.9  # scale factor
     # specify collocation coefficients
-    m = 4  # number of collocation points
     m_collocation = m
     # minimum number of power of 2 as the TPB in m direction
     pos = ceil(log(m, 2))
@@ -245,8 +246,8 @@ def collocation_solver_parallel():
             f.write("{} solved unsuccessfully. alpha = {}. Elapsed time: {}(s).\n".format(
                 example_name, alpha, total_time))
             print("Problem solved unsuccessfully.")
-    # # plot the result
-    # plot_result(size_y, size_z, t_span, y, z)
+    # plot the result
+    plot_result(size_y, size_z, t_span, y, z)
     return 
 
 
@@ -2377,4 +2378,13 @@ def mesh_sanity_check(N, mesh_it, max_mesh, max_nodes, min_nodes):
 
 
 if __name__ == '__main__':
-    collocation_solver_parallel()
+    parser = argparse.ArgumentParser(description="Use the CUDA based collocation solver to solve the "
+                                                 "optimal control problem.")
+    parser.add_argument("-m", type=int, choices=[3, 4, 5, 6, 7, 8, 9, 10], default=4,
+                        help="number of collocation points used to solve the problem")
+    args = parser.parse_args()
+    m = args.m
+
+    print("Running '{}'".format(__file__))
+    print("Solve the optimal control problem with {} collocation points.".format(m))
+    collocation_solver_parallel(m=m)
