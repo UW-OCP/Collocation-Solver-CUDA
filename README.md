@@ -1,96 +1,46 @@
----
-title: 'Collocation Solver with CUDA'
-disqus: hackmd
----
-
 Collocation Solver with CUDA
 ===
-<!-- ![downloads](https://img.shields.io/github/downloads/atom/atom/total.svg)
-![build](https://img.shields.io/appveyor/ci/:user/:repo.svg)
-![chat](https://img.shields.io/discord/:serverId.svg) -->
+###### tags: `nonlinear optimal control problem`, `boundary value problem`, `collocation method`, `Python`, `CUDA`
 
-## Table of Contents
+> A software to solve nonlinear optimal control problems using collocation method implemented in Python and CUDA. 
 
-[TOC]
+> The article is under publication. :smile: 
 
-## Beginners Guide
+> The instruction of the solver is presented below. :arrow_down: 
 
-If you are a total beginner to this, start here!
+## :memo: Set up
 
-1. Visit hackmd.io
-2. Click "Sign in"
-3. Choose a way to sign in
-4. Start writing note!
+The solver needs to run on machine equipped with targeted Nvidia **GPU** and **CUDA** installed. 
 
-User story
----
+The installation of CUDA can be found at https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html.
 
-```gherkin=
-Feature: Guess the word
+The solver can be ran on **Python3** with the following necessary packages.
 
-  # The first example has two steps
-  Scenario: Maker starts a game
-    When the Maker starts a game
-    Then the Maker waits for a Breaker to join
+- Python (>=3.5.0)
+- Numpy (>=1.11.0)
+- Sympy (>=1.1)
+- Matplotlib (>=3.00)
+- Numba (>=0.48)
+- Libgcc
+- Cudatoolkit
 
-  # The second example has three steps
-  Scenario: Breaker joins a game
-    Given the Maker has started a game with the word "silky"
-    When the Breaker joins the Maker's game
-    Then the Breaker must guess a word with 5 characters
-```
-> I choose a lazy person to do a hard job. Because a lazy person will find an easy way to do it. [name=Bill Gates]
-
-
-```gherkin=
-Feature: Shopping Cart
-  As a Shopper
-  I want to put items in my shopping cart
-  Because I want to manage items before I check out
-
-  Scenario: User adds item to cart
-    Given I'm a logged-in User
-    When I go to the Item page
-    And I click "Add item to cart"
-    Then the quantity of items in my cart should go up
-    And my subtotal should increment
-    And the warehouse inventory should decrement
+Set up Python with CUDA with installing needed dependencies by
+```bash
+sudo apt-get install build-essential freeglut3-dev libxmu-dev libxi-dev git cmake libqt4-dev libphonon-dev libxml2-dev libxslt1-dev libqtwebkit-dev libboost-all-dev python-setuptools libboost-python-dev libboost-thread-dev -y
 ```
 
-> Read more about Gherkin here: https://docs.cucumber.io/gherkin/reference/
+## :incoming_envelope:  Development Guide
 
-User flows
----
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-Note left of Alice: Alice responds
-Alice->Bob: Where have you been?
+The solver can be used with the command in terminal as
+```bash
+./run_2d_shared.sh ocp_example (m)
 ```
+### Input
+- **ocp_example**:  a positional argument which is a plain text file defining the optimal control problem (OCP) to be solved with necessary fields for the solver. Definition syntax can be found in the repo `Multiple_Shooting_Solver_CUDA`. Examples can be found in the repo `ocp_test_problems`.
+- **m**: an optional argument to set the number of collocation points used by the solver to solve the problem. By default, it is set as 4.
 
-> Read more about sequence-diagrams here: http://bramp.github.io/js-sequence-diagrams/
+## About the solver
 
-Project Timeline
----
-```mermaid
-gantt
-    title A Gantt Diagram
+*The solver is developed by Dynamic Systems Modeling and Controls Laboratory at University of Washington.*
 
-    section Section
-    A task           :a1, 2014-01-01, 30d
-    Another task     :after a1  , 20d
-    section Another
-    Task in sec      :2014-01-12  , 12d
-    anther task      : 24d
-```
-
-> Read more about mermaid here: http://mermaid-js.github.io/mermaid/
-
-## Appendix and FAQ
-
-:::info
-**Find this document incomplete?** Leave a comment!
-:::
-
-###### tags: `Templates` `Documentation`
+![](https://i.imgur.com/kQSpFjN.png)
